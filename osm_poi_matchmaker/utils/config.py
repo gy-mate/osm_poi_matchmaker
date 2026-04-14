@@ -390,8 +390,12 @@ def get_dataproviders_limit_elemets():
 
 
 def get_memory_enable_tracing():
-    setting = get_config_bool(KEY_MEMORY_ENABLE_TRACING)
-    if setting is not None:
-        return setting
-    else:
+    try:
+        setting = get_config_bool(KEY_MEMORY_ENABLE_TRACING)
+    except configparser.NoOptionError:
         return False
+    
+    if setting is None:
+        return False
+    
+    return setting
